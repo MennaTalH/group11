@@ -148,21 +148,34 @@ message
 
 
 
-$age = 15; 
+// $age = 15; 
 
 
-if($age <= 10){
+// if($age <= 10){
 
-    echo 'Age <= 10';
-}elseif($age >10 && $age <=20){
-    echo "age between 10 , 20";
-}else{
-    echo "age > 20";
-}
+//     echo 'Age <= 10';
+// }elseif($age >10 && $age <=20){
+//     echo "age between 10 , 20";
+// }else{
+//     echo "age > 20";
+// }
 
+
+
+ # Task ... 
+// Write a PHP program to calculate electricity bill .
+// Conditions:
+// For first 50 units – 3.50/unit
+// For next 100 units – 4.00/unit
+// For units above 150 – 6.50/unit
+// You can use conditional statements.
 
 
 
 
 ?>
+
+
+
+
 
