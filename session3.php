@@ -178,7 +178,15 @@
 
 
 
+function Clean($input,$flag = 0){
 
+    $input =  trim($input);
+
+    if($flag == 0){
+    $input =  filter_var($input,FILTER_SANITIZE_STRING);   // <>>>>>
+    }
+    return $input;
+}
 
 
 
@@ -186,9 +194,9 @@
 
  if($_SERVER['REQUEST_METHOD'] == "POST"){
    
-    $name     = $_POST['name'];
-    $password = $_POST['password'];
-    $email    = $_POST['email'];
+    $name     = Clean($_POST['name']);
+    $password = Clean($_POST['password'],1);
+    $email    = Clean($_POST['email']);
 
 
    # Validate ...... 
@@ -236,16 +244,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
     // $name     = $_REQUEST['name'];
     // $password = $_REQUEST['password'];
     // $email    = $_REQUEST['email'];
@@ -280,18 +278,18 @@
 
             <div class="form-group">
                 <label for="exampleInputName">Name</label>
-                <input type="text" class="form-control" id="exampleInputName" aria-describedby=""   name="name" placeholder="Enter Name">
+                <input type="text" class="form-control"  required id="exampleInputName" aria-describedby=""   name="name" placeholder="Enter Name">
             </div>
 
 
             <div class="form-group">
                 <label for="exampleInputEmail">Email address</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" placeholder="Enter email">
+                <input type="email" class="form-control"  required  id="exampleInputEmail1" aria-describedby="emailHelp" name="email" placeholder="Enter email">
             </div>
 
             <div class="form-group">
                 <label for="exampleInputPassword">New Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1"   name="password" placeholder="Password">
+                <input type="password" class="form-control" required id="exampleInputPassword1"   name="password" placeholder="Password">
             </div>
 
 
@@ -315,3 +313,5 @@
 
 
 </html> 
+
+
