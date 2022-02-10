@@ -7,6 +7,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     //   $name = $_POST['name'];
 
+
+
     if (!empty($_FILES['image']['name'])) {
 
         $imgName  = $_FILES['image']['name'];
@@ -62,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </head>
 
 <body>
-
+      
     <div class="container">
         <h2>Upload File</h2>
 
