@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (count($errors) > 0) {
         // print errors .... 
 
-        foreach ($errors as $key => $value) { 
+        foreach ($errors as $key => $value) {
             # code...
 
             echo '* ' . $key . ' : ' . $value . '<br>';
@@ -111,20 +111,22 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         // $_SESSION['email']    = $email;
 
 
-        $_SESSION['user'] = ["name" => $name , "email" => $email];
+        // $_SESSION['user'] = ["name" => $name , "email" => $email];
 
-        $_SESSION['Message']    = "Welcome to php Course .... ";
-
-        
-        echo 'Data Set to Session';
+        // $_SESSION['Message']    = "Welcome to php Course .... ";
 
 
+        // echo 'Data Set to Session';
 
 
 
+        $data =   implode('||', [$name, $email, $password]);
 
-
-
+        if (setcookie("info", $data, time() + 86400, '/')) {
+            echo 'Cookie Set To User Browser';
+        } else {
+            echo 'Error Try Again';
+        }
     }
 
 
@@ -199,3 +201,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 
 </html>
+
+
+
+
+<!-- 
+    https://tools.learningcontainer.com/sample-json-file.json 
+   http://shopping.marwaradwan.org/api/Products/1/1/0/100/atoz
+
+-->
