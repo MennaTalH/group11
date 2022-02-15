@@ -8,6 +8,8 @@
    D : DELETE 
 */
 require 'dbConnection.php';
+require 'checkLogin.php';
+
 require 'helpers.php';
 
 

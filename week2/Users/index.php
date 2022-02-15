@@ -1,6 +1,7 @@
 <?php  
 
 require 'dbConnection.php';
+require 'checkLogin.php';
 
 $sql = "select * from users"; 
 
