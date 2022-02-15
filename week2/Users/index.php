@@ -55,12 +55,22 @@ $data = mysqli_query($con,$sql);
 
           <?php 
           
+
+          # Message To User .... 
+
+          echo 'Welcome ,'.$_SESSION['User']['name'].'<br>';
+
+
+
+
             if(isset($_SESSION['Message'])){
                 echo ' * '.$_SESSION['Message'];
 
                 unset($_SESSION['Message']);
             }
           
+
+
           
           ?>
 
@@ -68,7 +78,7 @@ $data = mysqli_query($con,$sql);
 
         </div>
 
-        <a href="create.php">+ Account</a>
+        <a href="create.php">+ Account</a> ||   <a href="logout.php">LogOut</a>
 
         <table class='table table-hover table-responsive table-bordered'>
             <!-- creating our table heading -->
@@ -76,6 +86,7 @@ $data = mysqli_query($con,$sql);
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Image</th>
 
                 <th>action</th>
             </tr>
@@ -89,6 +100,7 @@ $data = mysqli_query($con,$sql);
                 <td><?php  echo $result['id'];  ?></td>
                 <td><?php  echo $result['name'];  ?></td>
                 <td><?php  echo $result['email'];  ?></td>
+                <td> <img src="./uploads/<?php  echo $result['image'];  ?>"   height="50" width="50" > </td>
 
                 <td>
                     <a href='delete.php?id=<?php  echo $result['id'];  ?>' class='btn btn-danger m-r-1em'>Delete</a>

@@ -14,7 +14,7 @@ require 'helpers.php';
 # Fetch data based on Id ...... 
 $id = $_GET['id'];
 
-$sql = "select id,name,email from users where id = $id";
+$sql = "select * from users where id = $id";
 $op  = mysqli_query($con,$sql);
 
 $data= mysqli_fetch_assoc($op); 
@@ -49,6 +49,29 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 
 
+
+
+ # Validate Image ..... 
+ if (!empty($_FILES['image']['name'])) {
+       
+   $imgName  = $_FILES['image']['name'];
+   $imgTemp  = $_FILES['image']['tmp_name'];
+   $imgType  = $_FILES['image']['type'];   //size 
+
+   $nameArray =  explode('.', $imgName);
+   $imgExtension =  strtolower(end($nameArray));
+   $imgFinalName = time() . rand() . '.' . $imgExtension;
+   $allowedExt = ['png', 'jpg'];
+
+   if (!in_array($imgExtension, $allowedExt)) {
+       $errors['Image']   = "Not Allowed Extension";
+   }
+
+}
+
+
+
+
     # Check ...... 
     if (count($errors) > 0) {
         // print errors .... 
@@ -60,9 +83,27 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         }
     } else {
 
+  
+        if (!empty($_FILES['image']['name'])) {
+
+
+            $disPath = 'uploads/' . $imgFinalName;
+
+            if (move_uploaded_file($imgTemp, $disPath)) {
+
+               # delete old image .... 
+               unlink('./uploads/'.$data['image']);
+            }
+
+            
+        }else{
+            $imgFinalName = $data['image'];
+        }
+    
+
         # DB CODE .......  
 
-        $sql = "update users set name = '$name' , email = '$email' where  id = $id";
+        $sql = "update users set name = '$name' , email = '$email' , image = '$imgFinalName' where  id = $id";
 
         $op  =  mysqli_query($con,$sql);
 
@@ -114,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <div class="container">
         <h2>Edit Account</h2>
 
-        <form action="edit.php?id=<?php echo $id;?>" method="post">
+        <form action="edit.php?id=<?php echo $id;?>" method="post"  enctype="multipart/form-data">
 
             <div class="form-group">
                 <label for="exampleInputName">Name</label>
@@ -131,6 +172,19 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <label for="exampleInputPassword">New Password</label>
                 <input type="password" class="form-control" required id="exampleInputPassword1" name="password" placeholder="Password">
             </div> -->
+
+
+
+            <div class="form-group">
+                <label for="exampleInputPassword">Image</label>
+                <input type="file" name="image">
+            </div>
+
+       
+
+           <img src="./uploads/<?php echo $data['image'];?>"   height="50"  width="50">
+
+           <br>
 
 
             <button type="submit" class="btn btn-primary">Update</button>
