@@ -3,7 +3,7 @@
 require 'dbConnection.php';
 require 'checkLogin.php';
 
-$sql = "select * from users"; 
+$sql = "select users.* , departments.title  from users  join departments on users.dep_id = departments.id "; 
 
 $data = mysqli_query($con,$sql);
 
@@ -87,7 +87,9 @@ $data = mysqli_query($con,$sql);
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Department</th>
                 <th>Image</th>
+              
 
                 <th>action</th>
             </tr>
@@ -101,6 +103,8 @@ $data = mysqli_query($con,$sql);
                 <td><?php  echo $result['id'];  ?></td>
                 <td><?php  echo $result['name'];  ?></td>
                 <td><?php  echo $result['email'];  ?></td>
+                <td><?php  echo $result['title'];  ?></td>
+
                 <td> <img src="./uploads/<?php  echo $result['image'];  ?>"   height="50" width="50" > </td>
 
                 <td>
@@ -135,3 +139,17 @@ $data = mysqli_query($con,$sql);
   mysqli_close($con);
 
 ?>
+
+
+
+
+
+
+<!-- 
+
+
+categories   [id , title ] 
+articales    [id , title , content , cat_id]  
+
+
+# Insert op .....  -->

@@ -10,11 +10,21 @@
 require 'dbConnection.php';
 require 'helpers.php';
 
+
+# Fetch Departments .... 
+$sql = "select * from departments";
+$dep_op  = mysqli_query($con,$sql);
+
+
+
+
+
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $name     = Clean($_POST['name']);
     $password = Clean($_POST['password'], 1);
     $email    = Clean($_POST['email']);
+    $dep_id   = Clean($_POST['dep_id']);
 
 
     # Validate ...... 
@@ -41,6 +51,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     } elseif (strlen($password) < 6) {
         $errors['Password'] = "Length Must be >= 6 chars";
     }
+
+
+
+    # validate Department 
+    if (empty($dep_id)) {
+        $errors['Department'] = "Field Required";
+    } elseif (!filter_var($dep_id,FILTER_VALIDATE_INT)) {
+        $errors['Department'] = "Invalid Department Id";
+    }
+
 
 
     # Validate Image ..... 
@@ -90,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 
 
-        $sql = "insert into users (name,email,password,image) values ('$name','$email','$password','$imgFinalName')";
+        $sql = "insert into users (name,email,password,image,dep_id) values ('$name','$email','$password','$imgFinalName',$dep_id)";
 
         $op  =  mysqli_query($con,$sql);
 
@@ -156,6 +176,27 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <label for="exampleInputPassword">New Password</label>
                 <input type="password" class="form-control" required id="exampleInputPassword1" name="password" placeholder="Password">
             </div>
+
+
+
+
+            <div class="form-group">
+                <label for="exampleInputPassword">Departments</label>
+                <select class="form-control"  name="dep_id" >
+                 
+                <?php 
+                   while($dep_data = mysqli_fetch_assoc($dep_op)){
+                ?>
+
+                <option value="<?php echo $dep_data['id'];?>"><?php echo $dep_data['title'];?></option>
+
+                <?php }  ?>
+
+                </select>    
+            </div>
+
+
+
 
 
             <div class="form-group">
